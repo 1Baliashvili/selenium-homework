@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 public class CommandsTest {
     @Test
+    
     public void task1()throws InterruptedException   {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
