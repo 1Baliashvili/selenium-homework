@@ -1,3 +1,4 @@
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
@@ -9,16 +10,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
-
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class FileUploadTest {
-    WebDriver driver;
-    public FileUploadTest() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-    }
+
+
 
     @Test
     public void uploading() throws InterruptedException{
+        WebDriver driver = new HtmlUnitDriver(BrowserVersion.CHROME,true);
         driver.get("http://the-internet.herokuapp.com/upload ");
         driver.manage().window().maximize();
         WebElement uploadInput = driver.findElement(By.xpath("//input[@id='file-upload']"));
@@ -40,8 +39,5 @@ public class FileUploadTest {
 
 
     }
-    @AfterMethod
-    public void tearDown(){
-        driver.close();
-    }
+
 }

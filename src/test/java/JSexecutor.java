@@ -1,25 +1,28 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.*;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
+
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import org.openqa.selenium.JavascriptExecutor;
-public class JSexecutor {
-    WebDriver driver;
-    public JSexecutor() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-    }
 
+import org.openqa.selenium.interactions.Actions;
+
+
+
+
+public class JSexecutor {
+
+
+    WebDriver driver;
     @Test
     public void hoverAndDelete() throws InterruptedException{
+
+
+        driver = new HtmlUnitDriver(BrowserVersion.CHROME,true);
         driver.get("http://webdriveruniversity.com/To-Do-List/index.html");
         driver.manage().window().maximize();
 
@@ -27,11 +30,14 @@ public class JSexecutor {
         WebElement toDoItem = driver.findElement(By.xpath("//li[text()=' Practice magic']"));
         action.moveToElement(toDoItem);
         action.perform();
-        System.out.println(driver.getPageSource());
-        Thread.sleep(2000);
+//        //System.out.println(driver.getPageSource());
+//        //Thread.sleep(2000);
+        WebElement element = driver.findElement(By.xpath("//*[@id='container']/ul/li[3]/span"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("$('i.fa.fa-trash').last().click()");
-        Thread.sleep(1000);
+        js.executeScript("arguments[0].click();", element);
+//        //Thread.sleep(1000);
+       driver.close();
+       driver.quit();
 
 
 
@@ -40,6 +46,8 @@ public class JSexecutor {
     }
     @Test
     public void scrollAndValidate() throws InterruptedException{
+
+        driver = new HtmlUnitDriver(BrowserVersion.CHROME,true);
         driver.get("http://webdriveruniversity.com/Scrolling/index.html");
         driver.manage().window().maximize();
 
@@ -49,14 +57,13 @@ public class JSexecutor {
         String text = js.executeScript("return arguments[0].innerText;",entries).toString();
         System.out.println(text);
         Thread.sleep(10000);
-
-
-
-
-
-    }
-    @AfterMethod
-    public void tearDown(){
         driver.close();
+        driver.quit();
+
+
+
+
+
     }
+
 }
